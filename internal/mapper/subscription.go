@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/shenikar/subscription-service/internal/dto"
 	"github.com/shenikar/subscription-service/internal/model"
 )
@@ -53,4 +54,40 @@ func ToResponseDTO(sub model.Subscription) dto.SubscriptionResponse {
 		StartDate:   formatMonthYear(sub.StartDate),
 		EndDate:     endDateSrt,
 	}
+}
+
+func ToModelSubscriptionFromUpdate(id int64, dto dto.UpdateSubscriptionRequest, current model.Subscription) (model.Subscription, error) {
+	sub := current
+	sub.ID = id
+
+	if dto.ServiceName != "" {
+		sub.ServiceName = dto.ServiceName
+	}
+	if dto.Price != 0 {
+		sub.Price = dto.Price
+	}
+	if dto.UserID != uuid.Nil {
+		sub.UserID = dto.UserID
+	}
+	if dto.StartDate != "" {
+		startDate, err := parseMonthYear(dto.StartDate)
+		if err != nil {
+			return model.Subscription{}, fmt.Errorf("invalid start_date format: %w", err)
+		}
+		sub.StartDate = startDate
+	}
+	if dto.EndDate != nil {
+		if *dto.EndDate != "" {
+			endDate, err := parseMonthYear(*dto.EndDate)
+			if err != nil {
+				return model.Subscription{}, fmt.Errorf("invalid end_date format: %w", err)
+			}
+			sub.EndDate = &endDate
+		} else {
+			// если передана пустая строка – удалить дату
+			sub.EndDate = nil
+		}
+	}
+
+	return sub, nil
 }

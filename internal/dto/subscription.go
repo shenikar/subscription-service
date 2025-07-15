@@ -10,12 +10,12 @@ type CreateSubscriptionRequest struct {
 	EndDate     *string   `json:"end_date,omitempty" binding:"omitempty,datetime=01-2006"`
 }
 
-type UpdateSubcscriptionRequest struct {
-	ServiceName *string    `json:"service_name" binding:"omitempty"`
-	Price       *int       `json:"price" binding:"omitempty min=1"`
-	UserID      *uuid.UUID `json:"user_id" binding:"omitempty"`
-	StartDate   *string    `json:"start_date" binding:"omitempty,datetime=01-2006"`
-	EndDate     *string    `json:"end_date,omitempty" binding:"omitempty,datetime=01-2006"`
+type UpdateSubscriptionRequest struct {
+	ServiceName string    `json:"service_name" binding:"omitempty"`
+	Price       int       `json:"price" binding:"omitempty min=1"`
+	UserID      uuid.UUID `json:"user_id" binding:"omitempty"`
+	StartDate   string    `json:"start_date" binding:"omitempty,datetime=01-2006"`
+	EndDate     *string   `json:"end_date,omitempty" binding:"omitempty,datetime=01-2006"`
 }
 
 type SubscriptionResponse struct {
