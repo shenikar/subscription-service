@@ -4,7 +4,7 @@ import "github.com/google/uuid"
 
 type CreateSubscriptionRequest struct {
 	ServiceName string    `json:"service_name" binding:"required"`
-	Price       int       `json:"price" binding:"required min=1"`
+	Price       int       `json:"price" binding:"required,min=1"`
 	UserID      uuid.UUID `json:"user_id" binding:"required"`
 	StartDate   string    `json:"start_date" binding:"required,datetime=01-2006"`
 	EndDate     *string   `json:"end_date,omitempty" binding:"omitempty,datetime=01-2006"`
@@ -12,7 +12,7 @@ type CreateSubscriptionRequest struct {
 
 type UpdateSubscriptionRequest struct {
 	ServiceName *string    `json:"service_name" binding:"omitempty"`
-	Price       *int       `json:"price" binding:"omitempty min=1"`
+	Price       *int       `json:"price" binding:"omitempty,min=1"`
 	UserID      *uuid.UUID `json:"user_id" binding:"omitempty"`
 	StartDate   *string    `json:"start_date" binding:"omitempty,datetime=01-2006"`
 	EndDate     *string    `json:"end_date,omitempty" binding:"omitempty,datetime=01-2006"`

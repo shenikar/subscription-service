@@ -23,5 +23,20 @@ services:
       - .env
     restart: always
 
+  migrate:
+    image: migrate/migrate:v4.16.2
+    container_name: subscription_migrate
+    volumes:
+      - ./migrations:/migrations
+    command:
+      [
+        "-path", "/migrations",
+        "-database", "postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}?sslmode=disable",
+        "up"
+      ]
+    depends_on:
+      - db
+    restart: "on-failure"
+
 volumes:
   pg_data:

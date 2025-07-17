@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "e44b2ffb-0b19-4e81-b09c-4047bb638ea9",
+		"name": "subscription",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42736096"
+	},
+	"item": [
+		{
+			"name": "get all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/subscriptions/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"subscriptions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"service_name\": \"Netflix\",\n  \"price\": 10,\n  \"user_id\": \"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11\",\n  \"start_date\": \"04-2025\",\n  \"end_date\": \"12-2025\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/subscriptions/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"subscriptions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "total",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"service_name\": \"Yandex\",\n  \"price\": 300,\n  \"start_date\": \"05-2025\",\n  \"end_date\": \"12-2025\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/subscriptions/total?user_id=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11&from_date=01-01-2025&to_date=31-12-2025",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"subscriptions",
+						"total"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+						},
+						{
+							"key": "from_date",
+							"value": "01-01-2025"
+						},
+						{
+							"key": "to_date",
+							"value": "31-12-2025"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"service_name\": \"Netflix Premium\",\n  \"price\": 15,\n  \"start_date\": \"05-2025\",\n  \"end_date\": \"12-2025\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/subscriptions/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"subscriptions",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/subscriptions/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"subscriptions",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"service_name\": \"Netflix\",\n  \"price\": 10,\n  \"user_id\": \"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11\",\n  \"start_date\": \"04-2025\",\n  \"end_date\": \"12-2025\"\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/subscriptions/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"subscriptions",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
