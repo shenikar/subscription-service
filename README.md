@@ -89,4 +89,4 @@ swag init -g cmd/app/main.go -o docs
 
 ## Лицензия
 
-MIT
+[MIT License](LICENSE)
