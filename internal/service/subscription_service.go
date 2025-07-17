@@ -79,58 +79,33 @@ func (s *SubscriptionService) GelAll(ctx context.Context) ([]model.Subscription,
 func (s *SubscriptionService) Update(ctx context.Context, id int64, req dto.UpdateSubscriptionRequest) (model.Subscription, error) {
 	log := logger.GetLogger()
 
-	existing, err := s.repo.GetByID(ctx, id)
+	current, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		log.WithError(err).Errorf("failed to get subscription for update: %d", id)
 		return model.Subscription{}, fmt.Errorf("get for update failed: %w", err)
 	}
-	if existing == nil {
+	if current == nil {
 		log.Warnf("subscription to update not found: %d", id)
 		return model.Subscription{}, fmt.Errorf("subscription not found")
 	}
 
-	// Обновляем поля
-	if req.ServiceName != nil {
-		existing.ServiceName = *req.ServiceName
-	}
-	if req.Price != nil {
-		existing.Price = *req.Price
-	}
-	if req.UserID != nil {
-		existing.UserID = *req.UserID
-	}
-	if req.StartDate != nil {
-		startDate, err := mapper.ParseMonthYear(*req.StartDate)
-		if err != nil {
-			log.WithError(err).Errorf("invalid start_date format: %s", *req.StartDate)
-			return model.Subscription{}, fmt.Errorf("invalid start_date: %w", err)
-		}
-		existing.StartDate = startDate
-	}
-	if req.EndDate != nil {
-		if *req.EndDate != "" {
-			endDate, err := mapper.ParseMonthYear(*req.EndDate)
-			if err != nil {
-				log.WithError(err).Errorf("invalid end_date format: %s", *req.EndDate)
-				return model.Subscription{}, fmt.Errorf("invalid end_date: %w", err)
-			}
-			existing.EndDate = &endDate
-		} else {
-			existing.EndDate = nil
-		}
+	updated, err := mapper.ToModelSubscriptionFromUpdate(id, req, *current)
+	if err != nil {
+		log.WithError(err).Error("failed to map update request")
+		return model.Subscription{}, fmt.Errorf("invalid input: %w", err)
 	}
 
-	if err := s.repo.Update(ctx, existing); err != nil {
+	if err := s.repo.Update(ctx, &updated); err != nil {
 		log.WithError(err).Errorf("failed to update subscription: %d", id)
 		return model.Subscription{}, fmt.Errorf("update failed: %w", err)
 	}
 
 	log.WithFields(logrus.Fields{
-		"id":      existing.ID,
-		"user_id": existing.UserID,
+		"id":      updated.ID,
+		"user_id": updated.UserID,
 	}).Info("subscription updated")
 
-	return *existing, nil
+	return updated, nil
 }
 
 func (s *SubscriptionService) Delete(ctx context.Context, id int64) error {
